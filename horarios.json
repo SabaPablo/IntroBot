@@ -1,0 +1,34 @@
+{"consultas":
+    [
+        {
+            "profe": "Alan",
+            "dia": "Lunes",
+            "hora_inicio": 9,
+            "minutos_inicio": 30,
+            "hora_fin":13,
+            "minutos_fin": 30
+        },{
+            "profe": "Saba",
+            "dia": "Domingo",
+            "hora_inicio": 18,
+            "minutos_inicio": 30,
+            "hora_fin":21,
+            "minutos_fin": 30
+        },{
+            "profe": "Charly",
+            "dia": "Jueves",
+            "hora_inicio": 9,
+            "minutos_inicio": 30,
+            "hora_fin":13,
+            "minutos_fin": 30
+        },{
+            "profe": "Vale",
+            "dia": "Jueves",
+            "hora_inicio": 18,
+            "minutos_inicio": 30,
+            "hora_fin":21,
+            "minutos_fin": 30
+        }
+
+    ]
+}
