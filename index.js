@@ -1,5 +1,6 @@
+require('dotenv').config(); 
+
 const Discord = require("discord.js");
-const config = require("./config.json");
 const horarios = require("./horarios.json")
 
 const client = new Discord.Client();
@@ -7,11 +8,6 @@ const prefix = ">>";
 const prefixIgnore = "!";
 
 let alumnosConsulta= []
-
-
-
-
-client.login(config.BOT_TOKEN);
 
 client.on("message", function(message) { 
   if (message.author.bot) return;
@@ -118,5 +114,4 @@ class Alumno{
   
 }
 
-
-client.login(config.BOT_TOKEN);
+client.login(process.env.TOKEN);
