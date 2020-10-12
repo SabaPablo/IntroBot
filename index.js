@@ -15,16 +15,15 @@ client.on("message", function(message) {
   if (message.channel.name != "pedido-de-consulta") return;
 
   if(!message.content.startsWith(prefix) ){
-    if(!estaEnHorario() || salaHabilitada){
-      message.reply(`Actualmente no estamos en horario de consulta, si deseas hacer una consulta fuera del horario, puedes hacerlo en el aula virtual`);
-    }else{
+    if(estaEnHorario() || salaHabilitada){
       alumnosConsulta =  alumnosConsulta.filter( function( e ) {
         return e.nombre !== message.author.username;
     } );
-
       alumnosConsulta.push(
         new Alumno(message.author.username, new Date())
       )
+    }else{
+      message.reply(`Actualmente no estamos en horario de consulta, si deseas hacer una consulta fuera del horario, puedes hacerlo en el aula virtual`);
     }
   }else{
     if(message.member.roles.cache.some(r => r.name === "Profes")){
@@ -33,10 +32,10 @@ client.on("message", function(message) {
       const command = args.shift();
       switch(command){
         case "alumnos" : message.reply(listaAlumnos()); break;
-        case "cantidad" : message.reply(alumnosConsulta.size); break;
+        case "cantidad" : message.reply(`cantidad de consultas -> ${alumnosConsulta.size}`); break;
         case "limpiar" : message.reply(limpiarLista()); break;
-        case "habilitar" : message.reply(habilitar())
-        case "restablecer" : message.reply(restablecer())
+        case "habilitar" : message.reply(habilitar()); break;
+        case "restablecer" : message.reply(restablecer()); break;
         case "diaSemana" : message.reply(diaSemana()); break;
         case "help": message.reply(help); break;
         default: message.reply("No es un comando conocido");
