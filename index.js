@@ -36,7 +36,7 @@ client.on("message", function(message) {
         case "cantidad" : message.reply(alumnosConsulta.size); break;
         case "limpiar" : message.reply(limpiarLista()); break;
         case "habilitar" : message.reply(habilitar())
-        case "restablecer" : message.reply(reestablecer())
+        case "restablecer" : message.reply(restablecer())
         case "diaSemana" : message.reply(diaSemana()); break;
         case "help": message.reply(help); break;
         default: message.reply("No es un comando conocido");
