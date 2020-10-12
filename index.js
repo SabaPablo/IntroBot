@@ -6,8 +6,8 @@ const horarios = require("./horarios.json")
 const client = new Discord.Client();
 const prefix = ">>";
 const prefixIgnore = "!";
-
-let alumnosConsulta= []
+const salaHabilitada = false;
+let alumnosConsulta= [];
 
 client.on("message", function(message) { 
   if (message.author.bot) return;
@@ -15,8 +15,8 @@ client.on("message", function(message) {
   if (message.channel.name != "pedido-de-consulta") return;
 
   if(!message.content.startsWith(prefix) ){
-    if(!estaEnHorario()){
-      message.reply(`Actualmente no estamos en horario de consulta, si deseas hacer una consulta fuera del horario, puedes hacerlo en el aula vitual`);
+    if(!estaEnHorario() || salaHabilitada){
+      message.reply(`Actualmente no estamos en horario de consulta, si deseas hacer una consulta fuera del horario, puedes hacerlo en el aula virtual`);
     }else{
       alumnosConsulta =  alumnosConsulta.filter( function( e ) {
         return e.nombre !== message.author.username;
@@ -35,6 +35,8 @@ client.on("message", function(message) {
         case "alumnos" : message.reply(listaAlumnos()); break;
         case "cantidad" : message.reply(alumnosConsulta.size); break;
         case "limpiar" : message.reply(limpiarLista()); break;
+        case "habilitar" : message.reply(habilitar())
+        case "restablecer" : message.reply(reestablecer())
         case "diaSemana" : message.reply(diaSemana()); break;
         case "help": message.reply(help); break;
         default: message.reply("No es un comando conocido");
@@ -43,6 +45,17 @@ client.on("message", function(message) {
   }
 
 });   
+
+
+function habilitar(){
+  salaHabilitada = true;
+  return(":key: Sala abierta")
+}
+
+function restablecer(){
+  salaHabilitada = false;
+  return(":infinity: Servicio restablecido")
+}
 
 const help = 
 `
@@ -55,7 +68,11 @@ const help =
   :small_orange_diamond: limpiar
       Limpia la lista de alumnos
   :small_orange_diamond: diaSemana
-      Devuelve en que dia de la semana estamos
+      Devuelve en que día de la semana estamos
+  :small_orange_diamond: activar
+      Habilita manualmente la sala para consultas
+  :small_orange_diamond: restablecer
+      Restablece la sala de consulta automática
   :small_orange_diamond: help
       Da los comandos disponibles
 
