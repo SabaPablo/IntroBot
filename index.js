@@ -6,7 +6,7 @@ const horarios = require("./horarios.json")
 const client = new Discord.Client();
 const prefix = ">>";
 const prefixIgnore = "!";
-const salaHabilitada = false;
+let salaHabilitada = false;
 let alumnosConsulta= [];
 
 client.on("message", function(message) { 
