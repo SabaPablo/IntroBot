@@ -32,7 +32,7 @@ client.on("message", function(message) {
       const command = args.shift();
       switch(command){
         case "alumnos" : message.reply(listaAlumnos()); break;
-        case "cantidad" : message.reply(`cantidad de consultas -> ${alumnosConsulta.size}`); break;
+        case "cantidad" : message.reply(`cantidad de consultas -> ${alumnosConsulta.length}`); break;
         case "limpiar" : message.reply(limpiarLista()); break;
         case "habilitar" : message.reply(habilitar()); break;
         case "restablecer" : message.reply(restablecer()); break;
