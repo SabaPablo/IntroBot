@@ -26,7 +26,9 @@ client.on("message", function(message) {
       message.reply(`Actualmente no estamos en horario de consulta, si deseas hacer una consulta fuera del horario, puedes hacerlo en el aula virtual`);
     }
   }else{
-    if(message.member.roles.cache.some(r => r.name === "Profes") || message.member.roles.cache.some(r => r.name === "Admin")){
+    if((message.member.roles.cache.some(r => r.name === "Profes") 
+    || message.member.roles.cache.some(r => r.name === "Admin")) &&
+    message.content.startsWith(prefix)){
       const commandBody = message.content.slice(prefix.length);
       const args = commandBody.split(' ');
       const command = args.shift();
