@@ -14,7 +14,7 @@ client.on("message", function(message) {
   if (message.content.startsWith(prefixIgnore)) return;
   if (!(message.channel.name === "pedido-de-consulta" || message.channel.name === "docentes-general")) return;
 
-  if(!message.content.startsWith(prefix) && !message.channel.name === "docentes-general"){
+  if(!message.content.startsWith(prefix) && !(message.channel.name === "docentes-general")){
     if(estaEnHorario() || salaHabilitada){
       alumnosConsulta =  alumnosConsulta.filter( function( e ) {
         return e.nombre !== message.author.username;
