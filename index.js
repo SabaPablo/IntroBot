@@ -20,7 +20,7 @@ client.on("message", function(message) {
         return e.nombre !== message.author.username;
     } );
       alumnosConsulta.push(
-        new Alumno(message.author.username, new Date(new Date().toLocaleString('es-AR')))
+        new Alumno(message.author.username, new Date())
       )
     }else{
       message.reply(`Actualmente no estamos en horario de consulta, si deseas hacer una consulta fuera del horario, puedes hacerlo en el aula virtual`);
@@ -85,7 +85,7 @@ function limpiarLista(){
 
 function diaSemana(){
   var dias=["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-  var dt = new Date(new Date().toLocaleString('es-AR'));
+  var dt = new Date();
   return dias[dt.getUTCDay()];    
 };
 
@@ -110,7 +110,7 @@ function getDate(dt ){
 
 function estaEnHorario(){
   let res = false;
-  const today = new Date(new Date().toLocaleString('es-AR'))
+  const today = new Date()
   horarios.consultas.forEach(consulta => {
     if((diaSemana() === consulta.dia)&& (today.getHours() >consulta.hora_inicio || 
     (today.getHours() ==consulta.hora_inicio && today.getMinutes() >consulta.minutos_inicio) )
