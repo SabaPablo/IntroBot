@@ -12,21 +12,21 @@ let alumnosConsulta= [];
 client.on("message", function(message) { 
   if (message.author.bot) return;
   if (message.content.startsWith(prefixIgnore)) return;
-  if (message.channel.name != "pedido-de-consulta") return;
+  if (message.channel.name != "pedido-de-consulta" || message.channel.name != "docentes-general") return;
 
-  if(!message.content.startsWith(prefix) ){
+  if(!message.content.startsWith(prefix) && message.channel.name != "docentes-general"){
     if(estaEnHorario() || salaHabilitada){
       alumnosConsulta =  alumnosConsulta.filter( function( e ) {
         return e.nombre !== message.author.username;
     } );
       alumnosConsulta.push(
-        new Alumno(message.author.username, new Date())
+        new Alumno(message.author.username, new Date().toLocaleString("es-AR"))
       )
     }else{
       message.reply(`Actualmente no estamos en horario de consulta, si deseas hacer una consulta fuera del horario, puedes hacerlo en el aula virtual`);
     }
   }else{
-    if(message.member.roles.cache.some(r => r.name === "Profes")){
+    if(message.member.roles.cache.some(r => r.name === "Profes") || message.member.roles.cache.some(r => r.name === "Admin")){
       const commandBody = message.content.slice(prefix.length);
       const args = commandBody.split(' ');
       const command = args.shift();
@@ -68,7 +68,7 @@ const help =
       Limpia la lista de alumnos
   :small_orange_diamond: diaSemana
       Devuelve en que día de la semana estamos
-  :small_orange_diamond: activar
+  :small_orange_diamond: habilitar
       Habilita manualmente la sala para consultas
   :small_orange_diamond: restablecer
       Restablece la sala de consulta automática
@@ -85,7 +85,7 @@ function limpiarLista(){
 
 function diaSemana(){
   var dias=["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
-  var dt = new Date();
+  var dt = new Date().toLocaleString("es-AR");
   return dias[dt.getUTCDay()];    
 };
 
@@ -110,12 +110,12 @@ function getDate(dt ){
 
 function estaEnHorario(){
   let res = false;
-  const today = new Date()
+  const today = new Date().toLocaleString("es-AR")
   horarios.consultas.forEach(consulta => {
     if((diaSemana() === consulta.dia)&& (today.getHours() >consulta.hora_inicio || 
     (today.getHours() ==consulta.hora_inicio && today.getMinutes() >consulta.minutos_inicio) )
-    && today.getHours() <consulta.hora_fin || 
-    (today.getHours() ==consulta.hora_fin && today.getMinutes() <consulta.minutos_fin) ){
+    && (today.getHours() <consulta.hora_fin || 
+    (today.getHours() ==consulta.hora_fin && today.getMinutes() <consulta.minutos_fin) )){
       res = true;
     }
 
