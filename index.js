@@ -12,7 +12,7 @@ let alumnosConsulta= [];
 client.on("message", function(message) { 
   if (message.author.bot) return;
   if (message.content.startsWith(prefixIgnore)) return;
-  if (message.channel.name != "pedido-de-consulta" || message.channel.name != "docentes-general") return;
+  if (!(message.channel.name == "pedido-de-consulta" || message.channel.name == "docentes-general")) return;
 
   if(!message.content.startsWith(prefix) && message.channel.name != "docentes-general"){
     if(estaEnHorario() || salaHabilitada){
